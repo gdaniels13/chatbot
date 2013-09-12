@@ -1,7 +1,7 @@
 from database import Database
 
 class Brain:
-	def __init__(self,name='freddy',dbName='memory.sqlite'):
+	def __init__(self,name='Ida',dbName='memory.sqlite'):
 		self.name=name
 		self.db = Database(dbName)
 	def setName(self,name):

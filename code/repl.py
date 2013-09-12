@@ -1,12 +1,36 @@
 
 from theBrain import Brain
 
+
+
+# A small function to strip input down to the first phrase or sentence, to
+# remove punctuation and captialization, and to replace superfluous whitespace.
+# It returns the input as tokenized, capitalized, puctuation devoid words.
+def input_tenderizer(input_str):
+    # Begin by tokenizing the sentence into individual, whitespace separated
+    # components.
+    temp = input_str.upper()
+    temp = temp.translate(None, ',.?!:;\'\"')
+    temp = temp.split()
+
+    # Remove any punctuation from the tokens in temp.
+    for x in temp:
+	    x = x.translate(None, ',.?!:;\'\"').upper()
+
+    # We might be able to terminate the sentence with str.find
+
+    # Return the list.
+    return temp
+
+
 brain = Brain()
-brain.otherPersonName = 'george'
+brain.otherPersonName = 'Sigmund'
 var = "hello"
 print(var)
 while (var != "Die"):
-	var = raw_input('<' + brain.otherPersonName + '>')
-	print '<' + brain.name + '> ' + brain.whatNext(var)
+	var = raw_input('<' + brain.otherPersonName + '> ')
+#	print '<' + brain.name + '> ' + brain.whatNext(input_tenderizer(var))
+#	print '<' + brain.name + '> ' + input_tenderizer(var)
+	print '<' + brain.name + '> ' + ' '.join(input_tenderizer(var))
 
 print("You killed me....")
