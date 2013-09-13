@@ -8,6 +8,6 @@ class Database:
 
 
 	def insertQA(self,question,answer):
-		qa = (answer,question)
-		self.cursor.execute('INSERT INTO responses values(?,?)',qa)
-
+		qa = [(answer,question)]
+		self.cursor.executemany('INSERT INTO responses values(?,?)',qa)
+		self.conn.commit()
