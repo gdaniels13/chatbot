@@ -1,5 +1,4 @@
-
-from theBrain import Brain
+from patient import Patient
 
 
 
@@ -9,9 +8,7 @@ from theBrain import Brain
 def input_tenderizer(input_str):
     # Begin by tokenizing the sentence into individual, whitespace separated
     # components.
-    # temp = input_str.lower()
     temp = input_str.lower().translate(None, ',.?!:;\'\"').split()
-    # temp = temp.split()
 
     # Remove any punctuation from the tokens in temp.
     #for x in temp:
@@ -22,14 +19,14 @@ def input_tenderizer(input_str):
     return ' '.join(temp)
 
 
-brain = Brain()
-brain.otherPersonName = 'Sigmund'
-var = "hello"
-print(var)
-while (var != "Die"):
-    var = raw_input('<' + brain.otherPersonName + '> ')
-#	print '<' + brain.name + '> ' + brain.whatNext(input_tenderizer(var))
-#	print '<' + brain.name + '> ' + input_tenderizer(var)
-    print '<' + brain.name + '> ' + brain.whatNext(input_tenderizer(var)).upper()
+patient = Patient()
+patient.otherPersonName = 'Sigmund'
+#var = "Hello, cruel world!"
+#print(var)
+#while (var != "Die"):
 
-print("You killed me....")
+print "Hello Dr. Freud."
+while True:
+    print '<' + patient.name + '> ' + patient.get_response(input_tenderizer(raw_input('<' + patient.otherPersonName + '> '))).upper()
+
+#print("Goodbye, cruel world!")
