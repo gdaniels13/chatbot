@@ -20,13 +20,13 @@ def input_tenderizer(input_str):
 
 
 patient = Patient()
-patient.otherPersonName = 'Sigmund'
+patient.otherPersonName = 'individual'
 #var = "Hello, cruel world!"
 #print(var)
 #while (var != "Die"):
 
-print "Hello Dr. Freud."
+print "Hello " + patient.otherPersonName
 while True:
-    print '<' + patient.name + '> ' + patient.get_response(input_tenderizer(raw_input('<' + patient.otherPersonName + '> '))).upper()
+    print '<' + patient.name + '> ' + patient.get_response(input_tenderizer(raw_input('<' + patient.otherPersonName + '> '))).lower()
 
 #print("Goodbye, cruel world!")

@@ -1,5 +1,6 @@
 import sys
 import os
+import re
 from database import Database
 from rule import Rule
 
@@ -21,7 +22,9 @@ class Patient:
 	def set_name(self,name):
 		self.name=name
 	
-
+	def set_other_name(self,rule,name):
+		t = re.match(rule.pattern_str, name)
+		self.otherPersonName = t.group(1)
 
 	def get_response(self,statement):
 		self.response_index += 1
@@ -45,8 +48,8 @@ class Patient:
 			self.recent_topics.pop(0)
 		print newTopic
 
-	def parse_topic(self,input):
-		ignore_list = 
+	def parse_topic(self,rule,input):
+		ignore_list = ["do", "dont"]
 		print input
 
 
@@ -54,40 +57,40 @@ class Patient:
 		self.Rules = []
 
 		# response to "how does that make you feel"
-		self.Rules.append( Rule( 'how (does|do) (?P<topic>\w+) make you feel' , ["i feel happy about ?topic .","i feel happy about destroying ?topic .", "i hate ?topic ."], None))
+		self.Rules.append( Rule( ['how (does|do) (?P<topic>\w+) make you feel'] , ["i feel happy about ?topic .","i feel happy about destroying ?topic .", "i hate ?topic ."], None))
 
 		# response to "im a doctor"
-		self.Rules.append( Rule( 'im a doctor', ['no, i\'m the doctor', 'thats nice'], None))
+		self.Rules.append( Rule( ['im a doctor'], ['no, i\'m the doctor', 'thats nice'], None))
 
 
-		self.Rules.append( Rule( 'what is wrong', ['everything','nothing','something'], None))
+		self.Rules.append( Rule( ['what is wrong'], ['everything','nothing','something'], None))
 
 		# Ida plays chess.
-		self.Rules.append( Rule( 'do you play chess', ["why, yes . i do ."], self.cmd_func("xboard")))
+		self.Rules.append( Rule( ['do you play chess'], ["why, yes . i do ."], self.cmd_func("xboard")))
 
 		#rule to interpret system exit
 		die_func = lambda instr : sys.exit()
-		self.Rules.append( Rule( 'die', ["goodbye"], die_func))
+		self.Rules.append( Rule( ['die'], ["goodbye"], die_func))
 
-		self.Rules.append( Rule( 'tell me more', [''], None))
-		self.Rules.append( Rule( 'why do you feel that way', ['my dog died', 'i got a job','i need help'], None))
-		self.Rules.append( Rule( 'how are you', ['im upset','im happy'], None))
-		self.Rules.append( Rule( 'do you like computer programming', ['no, do you', 'yes why do you ask'], None))
-		self.Rules.append( Rule( 'why do you always wear those sunglasses', ['i dont want to be here'], None))
-		self.Rules.append( Rule( 'what is your favorite color', ['purple, what is yours'], self.parse_topic))
-		self.Rules.append( Rule( 'what is your name', [self.name + "what is yours"], None))
-		self.Rules.append( Rule( 'how does playing checkers make you feel', ['it doesnt, i like chess, lets play....that was fun'], self.cmd_func("xboard")))
-		self.Rules.append( Rule( 'how did you illness make you feel', ['i dont get sick'], None))
-		self.Rules.append( Rule( 'are you beautiful', [''], None))
-		self.Rules.append( Rule( 'where are you family', [''], None))
-		self.Rules.append( Rule( 'where did you live before you came here', ['heaven'], None))
-		self.Rules.append( Rule( 'what happened', [''], None))
-
+		self.Rules.append( Rule( ['tell me more'], [''], None))
+		self.Rules.append( Rule( ['why do you feel that way'], ['my dog died', 'i got a job','i need help'], None))
+		self.Rules.append( Rule( ['how are you'], ['im upset','im happy'], None))
+		self.Rules.append( Rule( ['do you like computer programming'], ['no, do you', 'yes why do you ask'], None))
+		self.Rules.append( Rule( ['why do you always wear those sunglasses'], ['i dont want to be here'], None))
+		self.Rules.append( Rule( ['what is your favorite color'], ['purple, what is yours'], self.parse_topic))
+		self.Rules.append( Rule( ['what is your name'], [self.name + "what is yours"], None))
+		self.Rules.append( Rule( ['how does playing checkers make you feel'], ['it doesnt, i like chess, lets play....that was fun'], self.cmd_func("xboard")))
+		self.Rules.append( Rule( ['how did you illness make you feel'], ['i dont get sick'], None))
+		self.Rules.append( Rule( ['are you beautiful'], [''], None))
+		self.Rules.append( Rule( ['where are you family'], [''], None))
+		self.Rules.append( Rule( ['where did you live before you came here'], ['heaven'], None))
+		self.Rules.append( Rule( ['what happened'], ['i got sick', 'my dog died', 'my dad died'], None))
+		self.Rules.append( Rule( ['call me (?P<topic>\w+)','my name is (?P<topic>\w+)'],['ok ill call you ?topic'], self.set_other_name))
 
 
 		#perhaps add a rule to go back to a previous repsonse or question
 		#must be the last rule
-		self.Rules.append( Rule( '^.*' , ["you are a moron ."], None))
+		self.Rules.append( Rule( ['^.*'] , ["you are a moron ."], None))
 
 
 	# Utility function, returns a lambda that accepts a string and makes a command line call to cmd.

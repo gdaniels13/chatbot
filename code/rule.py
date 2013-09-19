@@ -2,19 +2,22 @@ import re
 
 class Rule:
 
-    def __init__(self, pattern_str, response_str_list, response_func):
-        self.pattern_str = pattern_str
+    def __init__(self, patterns, response_str_list, response_func):
+        self.pattern = patterns
         self.response_str_list = response_str_list
         self.response_func = response_func
-
+        
 
 
     def does_match_rule(self, input_str):
         # Here the program should look at input_str and return true if it
         # matches the rule's pattern. Otherwise return false.
-        var = re.match(self.pattern_str, input_str)
-        if var:
-            return True
+        for pattern_str in self.pattern:
+            
+            var = re.match(pattern_str, input_str)
+            if var:
+                self.pattern_str = pattern_str
+                return True
         return False
 
 
@@ -32,7 +35,7 @@ class Rule:
 
     	# Execute the optional response function.
     	if self.response_func != None:
-    		self.response_func(input_str)
+    		self.response_func(self,input_str)
 
         t = re.match(self.pattern_str, input_str)
 
