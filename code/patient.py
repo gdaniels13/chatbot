@@ -3,7 +3,7 @@ import os
 import re
 from database import Database
 from rule import Rule
-
+from filereader import My_File
 
 class Patient:
 	def __init__(self,name='Ida',dbName='memory.sqlite'):
@@ -14,10 +14,17 @@ class Patient:
 
 		self.response_index = 0
 		self.response_modulo = 3
+		self.possible_topics = []
 		self.recent_topics = []
 		self.recent_topic_count = 5
-	
+		
+		file = My_File('nouns')
+		self.possible_topics = file.wordList
 
+	def print_state(self, rule, pattern):
+		print self.recent_topics
+		print self.response_index
+		 
 
 	def set_name(self,name):
 		self.name=name
@@ -29,8 +36,9 @@ class Patient:
 	def get_response(self,statement):
 		self.response_index += 1
 
-		response=""
 
+		response=""
+		self.parse_topic(statement)
 		for x in self.Rules:
 			if x.does_match_rule(statement):
 				response = x.generate_response(statement)
@@ -44,13 +52,16 @@ class Patient:
 
 	def add_topic(self,newTopic):
 		self.recent_topics.append(newTopic)
-		if len(self.recent_topics)==self.recent_topic_count:
+		if len(self.recent_topics)>self.recent_topic_count:
 			self.recent_topics.pop(0)
 		print newTopic
 
-	def parse_topic(self,rule,input):
-		ignore_list = ["do", "dont"]
-		print input
+	def parse_topic(self,input):
+		for x in input.split():
+			if x in self.possible_topics != -1:
+				print x
+				self.add_topic(x);
+
 
 
 	def create_rules(self):
@@ -77,8 +88,8 @@ class Patient:
 		self.Rules.append( Rule( ['how are you'], ['im upset','im happy'], None))
 		self.Rules.append( Rule( ['do you like computer programming'], ['no, do you', 'yes why do you ask'], None))
 		self.Rules.append( Rule( ['why do you always wear those sunglasses'], ['i dont want to be here'], None))
-		self.Rules.append( Rule( ['what is your favorite color'], ['purple, what is yours'], self.parse_topic))
-		self.Rules.append( Rule( ['what is your name'], [self.name + "what is yours"], None))
+		self.Rules.append( Rule( ['what is your favorite color'], ['purple, what is yours'], None))
+		self.Rules.append( Rule( ['what is your name'], [self.name + " what is yours"], None))
 		self.Rules.append( Rule( ['how does playing checkers make you feel'], ['it doesnt, i like chess, lets play....that was fun'], self.cmd_func("xboard")))
 		self.Rules.append( Rule( ['how did you illness make you feel'], ['i dont get sick'], None))
 		self.Rules.append( Rule( ['are you beautiful'], [''], None))
@@ -86,7 +97,7 @@ class Patient:
 		self.Rules.append( Rule( ['where did you live before you came here'], ['heaven'], None))
 		self.Rules.append( Rule( ['what happened'], ['i got sick', 'my dog died', 'my dad died'], None))
 		self.Rules.append( Rule( ['call me (?P<topic>\w+)','my name is (?P<topic>\w+)'],['ok ill call you ?topic'], self.set_other_name))
-
+		self.Rules.append( Rule(['pys'],['here is what i am thinking'],self.print_state))
 
 		#perhaps add a rule to go back to a previous repsonse or question
 		#must be the last rule
