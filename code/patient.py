@@ -4,6 +4,9 @@ import re
 from database import Database
 from rule import Rule
 from filereader import My_File
+from question import Question
+from random import choice
+
 
 class Patient:
 	def __init__(self,name='Ida',dbName='memory.sqlite'):
@@ -16,7 +19,6 @@ class Patient:
 		self.response_modulo = 3
 		self.possible_topics = []
 		self.recent_topics = []
-		self.recent_topic_count = 5
 		
 		file = My_File('nouns')
 		self.possible_topics = file.wordList
@@ -42,26 +44,25 @@ class Patient:
 		for x in self.Rules:
 			if x.does_match_rule(statement):
 				response = x.generate_response(statement)
+				break	
 
-				#Database causing issues, will fix later.
-				#self.db.insertQA(statement,response)
-				if self.response_index%self.response_modulo == 0:
-					response += " " + self.get_question()
-				break
+				
+		#only ask a question if we dont know what to say
+		if response =="":
+			response += self.get_question()
+
 		return response
-
-	def add_topic(self,newTopic):
-		self.recent_topics.append(newTopic)
-		if len(self.recent_topics)>self.recent_topic_count:
-			self.recent_topics.pop(0)
-		print newTopic
 
 	def parse_topic(self,input):
 		for x in input.split():
 			if x in self.possible_topics != -1:
-				print x
-				self.add_topic(x);
+				self.recent_topics.append(x)
 
+	def get_topic(self):
+		if len(self.recent_topics) > 0:
+			return self.recent_topics.pop()
+		else:
+			return choice(self.possible_topics)
 
 
 	def create_rules(self):
@@ -101,7 +102,7 @@ class Patient:
 
 		#perhaps add a rule to go back to a previous repsonse or question
 		#must be the last rule
-		self.Rules.append( Rule( ['^.*'] , ["you are a moron ."], None))
+		#self.Rules.append( Rule( ['^.*'] , ["lets talk about ."], None))
 
 
 	# Utility function, returns a lambda that accepts a string and makes a command line call to cmd.
@@ -111,13 +112,17 @@ class Patient:
 
 
 	def get_question(self):
-		var = self.Questions.pop(0)
-		self.Questions.append(var)
-		return var
+		return choice(self.Questions).get_question(self.get_topic())
 
 
 
 	def create_questions(self):
 		self.Questions = []
-
-		self.Questions.append("How does that make you feel?")
+		self.Questions.append(Question("How does that make you feel?",False))
+		self.Questions.append(Question('why did you ask me about ?',True))
+		self.Questions.append(Question('is ? your favorite',True))
+		self.Questions.append(Question('do you like ?',True))
+		self.Questions.append(Question('do you have a family',True))
+		self.Questions.append(Question('have you ever destroyed a ?',True))
+		self.Questions.append(Question('have you ever made a ?',True))
+		self.Questions.append(Question('do you own a ?',True))
