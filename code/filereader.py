@@ -1,5 +1,7 @@
 from __future__ import with_statement
 from rule import Rule
+from question import Question
+
 class My_File:
 	def __init__(self, file_name):
 		self.file_name=file_name
@@ -12,7 +14,7 @@ class My_File:
 				wordList.append(line.rstrip())
 		return wordList
 		
-	def get_questions(self):
+	def get_patterns(self):
 		rules = []
 		curQuestions = []
 		curAnswers = []
@@ -35,3 +37,14 @@ class My_File:
 			curAnswers = []
 			curQuestions = []
 		return rules
+
+	def get_questions(self):
+		questions=[]
+		file=open(self.file_name,'r')
+		for line in file:
+			t = line.split(',')
+			if t[1] == 'T':
+				questions.append(Question(line[0],True))
+			else:
+				questions.append(Question(line[0],False))
+		return questions

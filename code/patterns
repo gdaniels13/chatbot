@@ -1,0 +1,155 @@
+q
+do you like volleyball
+a
+i dont like volleyball
+i like volleyball
+i like trains
+q
+do you sleep well
+a
+i sleep late
+i wakeup early
+q
+do you like tv
+do you like to watch tv
+do you watch tv
+a
+i dont like tv
+i like tv
+i love tv
+i hate tv
+i dont have a tv
+q
+thanks
+thank you
+a 
+your welcome
+no problem
+q 
+yes
+a
+thats nice
+q
+because (?P<topic>.+)
+a
+?topic is a good reason
+?topic is not a good reason
+q 
+no
+no i dont
+no  not yet
+a
+why
+why not
+yes you do
+q
+hi
+hello
+hi there
+hello (?P<topic>.+)
+a
+hi
+hello
+hi
+q
+why did you come to me
+why are you here
+a
+i need help
+i cannot sleep well
+im a bad person
+i dont want to be here
+q
+how old are you
+are you old
+are you young or old
+are you young
+a
+i am young
+q
+are you a good person
+are you a bad person
+what type of a person are you
+a
+im a bad person
+q 
+do you like music
+what type of music do you like
+do you listen to music
+a
+I like classical music
+q
+thats nice
+a
+ok
+q
+thats not nice
+that isnt nice
+a
+i dont care
+why not
+and your point is
+q
+do you like (?P<topic>.+)
+a
+no i dont like ?topic
+yes i like ?topic
+yes do you have a ?topic
+no but i like to break ?topic
+q
+how do you (?P<topic>.+)
+a
+very carefully
+with a hammer
+with a bomb
+with your face
+i like trains
+q
+have you ever (?P<topic>.+)
+a
+no i never have ?topic
+yes i ?topic all the time
+i would like to ?topic
+q
+do you
+a
+yes
+no
+perhaps
+depends
+sometimes
+q
+because
+a
+because why
+q
+you are right
+right you are
+you win
+a
+i know
+i always am
+q 
+have you been (?P<topic>.+)
+a
+no i havent been ?topic
+q
+have you (?P<topic>.+)
+a
+yes i ?topic
+no i ?topic
+q 
+why not
+a
+because
+because i said so
+because dont want to
+i like trains
+q
+be quiet
+a
+ok
+if you want...
+whatever
+shut your face
+end

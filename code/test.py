@@ -1,6 +1,7 @@
 from filereader import My_File
 
-t = My_File("nouns")
+t = My_File("questions")
 
-print t.get_nouns()
+for x in t.get_questions():
+	print x.question
 

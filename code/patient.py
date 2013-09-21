@@ -66,7 +66,7 @@ class Patient:
 
 	def get_topic(self):
 		if len(self.recent_topics) > 0:
-			return self.recent_topics.pop()
+			return choice(self.recent_topics)
 		else:
 			return choice(self.possible_topics)
 
@@ -116,8 +116,8 @@ class Patient:
 		#self.Rules.append( Rule( ['^.*'] , ["lets talk about ."], None))
 
 	def read_rules_from_file(self):
-		t = My_File("questions")
-		return t.get_questions()
+		t = My_File("patterns")
+		return t.get_patterns()
 
 
 
