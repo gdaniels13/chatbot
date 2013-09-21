@@ -13,8 +13,8 @@ class Patient:
 		self.name=name
 		self.db = Database(dbName)
 		self.create_rules()
+		self.Questions = []
 		self.create_questions()
-
 		self.response_index = 0
 		self.response_modulo = 3
 		self.possible_topics = []
@@ -44,6 +44,11 @@ class Patient:
 
 	def get_response(self,statement):
 		self.response_index += 1
+
+
+
+
+
 
 
 		response=""
@@ -133,13 +138,16 @@ class Patient:
 
 
 	def create_questions(self):
-		self.Questions = []
-		self.Questions.append(Question("How does that make you feel?",False))
-		self.Questions.append(Question('why did you ask me about ?',True))
-		self.Questions.append(Question('is ? your favorite',True))
-		self.Questions.append(Question('do you like ?',True))
-		self.Questions.append(Question('do you have a family',False))
-		self.Questions.append(Question('have you ever destroyed a ?',True))
-		self.Questions.append(Question('have you ever made a ?',True))
-		self.Questions.append(Question('do you own a ?',True))
+		t=My_File("questions")
+		self.Questions = self.Questions + t.get_questions()
 
+
+
+		# self.Questions.append(Question("How does that make you feel?",False))
+		# self.Questions.append(Question('why did you ask me about ?',True))
+		# self.Questions.append(Question('is ? your favorite',True))
+		# self.Questions.append(Question('do you like ?',True))
+		# self.Questions.append(Question('do you have a family',False))
+		# self.Questions.append(Question('have you ever destroyed a ?',True))
+		# self.Questions.append(Question('have you ever made a ?',True))
+		# self.Questions.append(Question('do you own a ?',True))

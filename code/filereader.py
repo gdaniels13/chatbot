@@ -42,9 +42,10 @@ class My_File:
 		questions=[]
 		file=open(self.file_name,'r')
 		for line in file:
-			t = line.split(',')
+			t = line.rstrip().split('**')
+			print t[1]
 			if t[1] == 'T':
-				questions.append(Question(line[0],True))
+				questions.append(Question(t[0],True))
 			else:
-				questions.append(Question(line[0],False))
+				questions.append(Question(t[0],False))
 		return questions
