@@ -149,7 +149,69 @@ q
 be quiet
 a
 ok
-if you want...
+if you want
 whatever
 shut your face
+q
+purple
+a
+purple is a nice color
+q
+are you michael douglas
+a
+no im batman
+q
+to seek the holy grail
+a
+what is your favorite color
+q
+do you know the muffin man
+the muffin man
+a
+the muffin man
+q
+why are there so many songs about rainbows
+a
+purple kittens
+q
+im batman
+a
+im sorry to hear about your family
+here are the drugs
+sear to me
+to the batcave
+q
+how do you feel
+a
+why do you talk to inanimate objects
+how do you feel
+that is an irrelevant question
+q
+why am i still talking to you
+why am i talking to you
+why do i talk to you
+why are you talking
+a
+because im the best computer ever
+because i'm really amazing
+pig faces
+because youre a sucker
+q
+i am your father
+im your daddy
+im your father
+a
+noooooo
+prove it
+no your not
+im your daddy
+q
+are you a (?P<topic>.+)
+a
+no im a computer
+i dont know am i
+q
+are you (?P<topic>.+)
+a
+no youre ?topic
 end

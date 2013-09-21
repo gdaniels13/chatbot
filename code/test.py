@@ -1,9 +1,4 @@
-from filereader import My_File
+from madfibs import MadFibs
+t = MadFibs()
 
-t = My_File("questions")
-
-for x in t.get_questions():
-	print x.question
-	print x.dynamic
-	print x.get_question("tester")
-
+print t.generate_narrative()

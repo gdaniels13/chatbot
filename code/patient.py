@@ -6,7 +6,8 @@ from rule import Rule
 from filereader import My_File
 from question import Question
 from random import choice
-
+from random import shuffle
+from madfibs import MadFibs
 
 class Patient:
 	def __init__(self,name='Ida',dbName='memory.sqlite'):
@@ -19,15 +20,18 @@ class Patient:
 		self.response_modulo = 3
 		self.possible_topics = []
 		self.recent_topics = []
-		
 		self.file = My_File('nouns')
 		self.possible_topics = self.file.get_nouns()
+		shuffle(self.Questions)
+		shuffle(self.Rules)
 
 	def refresh(self,rule,pattern):
 		self.recent_topics = [];
 		self.create_rules()
 		self.create_questions()
 		self.possible_topics = self.file.get_nouns()
+		shuffle(self.Questions)
+		shuffle(self.Rules)
 
 
 	def print_state(self, rule, pattern):
@@ -44,23 +48,18 @@ class Patient:
 
 	def get_response(self,statement):
 		self.response_index += 1
-
-
-
-
-
-
-
+		found_rule=False
 		response=""
 		self.parse_topic(statement)
 		for x in self.Rules:
 			if x.does_match_rule(statement):
 				response = x.generate_response(statement)
+				found_rule = True
 				break	
 
 				
 		#only ask a question if we dont know what to say
-		if response =="":
+		if not found_rule:
 			response += self.get_question()
 		return response
 
@@ -74,6 +73,10 @@ class Patient:
 			return choice(self.recent_topics)
 		else:
 			return choice(self.possible_topics)
+
+
+	def get_story(self,bob,george):
+		print '<'+self.name+'> '+ MadFibs().generate_narrative()
 
 
 	def create_rules(self):
@@ -92,12 +95,12 @@ class Patient:
 		self.Rules.append( Rule( ['do you play chess'], ["why, yes . i do ."], None))
 
 		#rule to interpret system exit
-		die_func = lambda instr : sys.exit()
+		die_func = lambda instr, bob : sys.exit()
 		self.Rules.append( Rule( ['die'], ["goodbye"], die_func))
 
 ##maybe put your thing here about the short story.
 
-		self.Rules.append( Rule( ['tell me more'], ['Response needed'], None))
+		self.Rules.append( Rule( ['tell me more'], [' '], self.get_story))
 		self.Rules.append( Rule( ['why do you feel that way'], ['my dog died', 'i got a job','i need help'], None))
 		self.Rules.append( Rule( ['how are you'], ['im upset','im happy'], None))
 		self.Rules.append( Rule( ['do you like computer programming'], ['no, do you', 'yes why do you ask'], None))
@@ -121,8 +124,9 @@ class Patient:
 		#self.Rules.append( Rule( ['^.*'] , ["lets talk about ."], None))
 
 	def read_rules_from_file(self):
-		t = My_File("patterns")
-		return t.get_patterns()
+		t = My_File("patterns").get_patterns()
+		t = t+My_File("ppatterns").get_patterns()
+		return t
 
 
 
@@ -138,16 +142,7 @@ class Patient:
 
 
 	def create_questions(self):
-		t=My_File("questions")
-		self.Questions = self.Questions + t.get_questions()
-
-
-
-		# self.Questions.append(Question("How does that make you feel?",False))
-		# self.Questions.append(Question('why did you ask me about ?',True))
-		# self.Questions.append(Question('is ? your favorite',True))
-		# self.Questions.append(Question('do you like ?',True))
-		# self.Questions.append(Question('do you have a family',False))
-		# self.Questions.append(Question('have you ever destroyed a ?',True))
-		# self.Questions.append(Question('have you ever made a ?',True))
-		# self.Questions.append(Question('do you own a ?',True))
+		t=My_File("questions").get_questions()
+		t = t + My_File("pquestions").get_questions()
+		self.Questions = t
+		

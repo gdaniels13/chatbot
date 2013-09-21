@@ -20,16 +20,16 @@ Im a doctor
 	my dog died
 	I got a job
 	Im happy
-I need help
+	I need help
 I dont like TV
 I like volleyball
 I am in school
-I can not sleep well
-I sleep late
-I wakeup early
-I like classical music
-Im a bad person
-I dont want to be here
-what makes you smart
-I am young
+	I can not sleep well
+	I sleep late
+	I wakeup early
+	I like classical music
+	Im a bad person
+	I dont want to be here
+	what makes you smart
+	I am young
 

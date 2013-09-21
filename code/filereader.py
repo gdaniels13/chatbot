@@ -43,7 +43,6 @@ class My_File:
 		file=open(self.file_name,'r')
 		for line in file:
 			t = line.rstrip().split('**')
-			print t[1]
 			if t[1] == 'T':
 				questions.append(Question(t[0],True))
 			else:
