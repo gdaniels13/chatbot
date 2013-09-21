@@ -1,4 +1,5 @@
 import re
+from random import choice
 
 class Rule:
 
@@ -23,9 +24,7 @@ class Rule:
 
 
     def pick_next_string(self):
-            toReturn = self.response_str_list.pop(0)
-            self.response_str_list.append(toReturn)
-            return toReturn
+            return choice(self.response_str_list)
 
     def generate_response(self, input_str):
         # Here the program should accept input_str as input and attempt to

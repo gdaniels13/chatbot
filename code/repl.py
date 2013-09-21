@@ -27,6 +27,6 @@ patient.otherPersonName = 'individual'
 
 print "Hello " + patient.otherPersonName
 while True:
-    print '<' + patient.name + '> ' + patient.get_response(input_tenderizer(raw_input('<' + patient.otherPersonName + '> '))).lower()
+    print '<' + patient.name + '> ' + patient.get_response(input_tenderizer(raw_input('<' + patient.otherPersonName + '> '))).lower().capitalize();
 
 #print("Goodbye, cruel world!")
