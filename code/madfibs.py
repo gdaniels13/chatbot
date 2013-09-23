@@ -49,7 +49,7 @@ class Insult:
 
 			return string.translate(insult, rot13)
 
-##change noting abce me
+##change nothing above me
 
 
 
@@ -62,6 +62,7 @@ class MadFibs:
 		self.emotions = ['happy','sad','angry','suicidal','moody','tired','pastoral','calm']
 		self.verbs = ['eating','playing','running','exploding','killing','destroying','stabbing','shooting','throwing']
 		self.nouns = ['puppy','cat','pet','chair','parent','chainsaw','store','book','house','black bear','toy']
+		self.propers = ['John', 'Paul', 'George', 'Ringo', 'Einstein', 'Newton', 'Archemidies', 'your mom']
 
 
 	def generate_narrative(self):
@@ -77,8 +78,9 @@ class MadFibs:
 		narrative += self.get_intro()
 
 		# Generate a variable length narrative body.
-		narrative += self.get_body()
-		narrative += self.get_body()
+		for i in range(0, random.randint(1, 3)):
+		    narrative += self.get_body()
+		    narrative += self.get_body()
 		
 
 		# Generate a conclusion.
@@ -101,30 +103,39 @@ class MadFibs:
 
 
 	def get_intro(self):
-		return random.choice(["Once upon a time, i was feeling ?emotion because ?noun was ?verb me .",
-							"A long time ago, i was involved in uber- ?verb .",
-							"When i was a child, i had a ?noun ."])
+		return random.choice(["Once upon a time, i was feeling ?emotion because ?proper was ?verb me .",
+							"A long time ago, i was involved in ?verb ?nouns .",
+							"When i was a child, i had a ?noun .",
+							"I once had a ?noun named ?proper , who liked ?verb a lot of ?nouns ."])
 
 	def get_body(self):
-		return random.choice(["Then my ?noun , was ?verb .",
-							"Then I was ?verb with my friend, which made me feel ?emotion about life .",
-							"That made me feel ?emotion and ?emotion while my ?noun was ?verb a ?noun ."])
+		return random.choice(["Then my ?noun , ?proper , was ?verb everything.",
+							"Then I was ?verb ?nouns with my friend, ?proper , which made me feel ?emotion about life .",
+							"That made me feel ?emotion and ?emotion while my ?noun was ?verb ?nouns .",
+							"This made ?proper feel ?emotion about ?proper and my ?noun ."])
 
 
 	def get_end(self):
 		return random.choice(["And that's how i learned to stop worrying and love the ?noun .",
 								"What do you think doc .",
 								"So what do you think .",
+								"What's your opinion .",
+								"Anyways, how do you think ?proper felt as the result of my cuel detention here in this padded cell, hmmm .",
+								"Things are better now, <derranged_giggle>he he he</derranged_giggle> ."
 								"In other words, yo momma's fat ."])
 
 	def get_word_type(self, wordtype):
-		wordtype=wordtype.rstrip().lstrip()
+		wordtype=wordtype #.rstrip().lstrip()
 		if wordtype =='verb':
 			return random.choice(self.verbs)
 		elif wordtype =='emotion':
 			return random.choice(self.emotions)
 		elif wordtype =='noun':
 			return random.choice(self.nouns)
+		elif wordtype =='nouns':
+			return random.choice(self.nouns) + "s"
+		elif wordtype =='proper':
+			return random.choice(self.propers)
 		else:
-			return "pie"
+			return self.get_word_type(random.choice(['verb', 'emotion', 'noun']))
 

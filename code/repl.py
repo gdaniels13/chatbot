@@ -10,6 +10,8 @@ def input_tenderizer(input_str):
     # components.
     temp = input_str.lower().translate(None, ',.?!:;\'\"').split()
 
+    # Translate second person to first person pronouns.
+
     # Remove any punctuation from the tokens in temp.
     #for x in temp:
 	#    x = x.translate(None, ',.?!:;\'\"').upper()
