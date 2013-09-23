@@ -214,4 +214,12 @@ q
 are you (?P<topic>.+)
 a
 no youre ?topic
+q
+why (?P<topic>.+)
+a
+because ?topic
+q
+why
+a
+because
 end

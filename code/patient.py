@@ -1,7 +1,6 @@
 import sys
 import os
 import re
-from database import Database
 from rule import Rule
 from filereader import My_File
 from question import Question
@@ -12,7 +11,6 @@ from madfibs import MadFibs
 class Patient:
 	def __init__(self,name='Ida',dbName='memory.sqlite'):
 		self.name=name
-		self.db = Database(dbName)
 		self.create_rules()
 		self.Questions = []
 		self.create_questions()
